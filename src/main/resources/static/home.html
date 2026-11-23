@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="A simple and reliable system for managing banking operations.">
+    <title>Banking System | Banking Transaction System</title>
+
+
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<header class="site-header">
+    <nav class="nav container" aria-label="Main navigation">
+
+        <a href="#home" class="brand">
+        <span class="brand-logo" aria-hidden="true">
+          <svg class="icon" viewBox="0 0 24 24">
+            <path d="M3 10l9-6 9 6H3z"/>
+            <path d="M6 10v8M10 10v8M14 10v8M18 10v8"/>
+            <path d="M3 21h18"/>
+          </svg>
+        </span>
+            <span>Banking System</span>
+        </a>
+
+        <button class="menu-toggle" id="menu-toggle" type="button"
+                aria-expanded="false" aria-controls="nav-menu" aria-label="Open menu">
+            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
+                <path class="icon-open" d="M4 6h16M4 12h16M4 18h16"/>
+                <path class="icon-close" d="M6 6l12 12M18 6L6 18"/>
+            </svg>
+        </button>
+
+        <ul class="nav-menu" id="nav-menu">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#features">Features</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+
+    </nav>
+</header>
+
+<main>
+
+    <section class="hero" id="home">
+        <div class="container">
+            <h1>Welcome to Banking Transaction System</h1>
+            <p>A simple and reliable system for managing banking operations.</p>
+
+            <a href="#features" class="btn">Get Started</a>
+        </div>
+    </section>
+
+    <section class="section" id="about">
+        <div class="container">
+            <h2 class="section-title">About the system</h2>
+            <p class="section-intro">
+                Banking Transaction System brings everyday banking into one clear place:
+                managing accounts, carrying out operations securely and processing
+                transactions accurately.
+            </p>
+        </div>
+    </section>
+
+    <section class="section section-grey" id="features">
+        <div class="container">
+            <h2 class="section-title">Key features</h2>
+            <p class="section-intro">Three core areas that keep banking operations organised and dependable.</p>
+
+            <div class="feature-grid">
+
+                <article class="feature-card">
+                    <div class="feature-icon" aria-hidden="true">
+                        <svg class="icon" viewBox="0 0 24 24">
+                            <circle cx="12" cy="8" r="4"/>
+                            <path d="M4 21c0-4.4 3.6-8 8-8s8 3.6 8 8"/>
+                        </svg>
+                    </div>
+                    <h3>Account Management</h3>
+                    <p>Create and maintain customer accounts, with all account details kept organised in one place.</p>
+                </article>
+
+                <article class="feature-card">
+                    <div class="feature-icon" aria-hidden="true">
+                        <svg class="icon" viewBox="0 0 24 24">
+                            <path d="M12 3l8 3v6c0 4.5-3.2 8-8 9-4.8-1-8-4.5-8-9V6l8-3z"/>
+                            <path d="M9 12l2 2 4-4"/>
+                        </svg>
+                    </div>
+                    <h3>Secure Banking Operations</h3>
+                    <p>Carry out everyday banking tasks with careful checks, so every operation stays safe and accountable.</p>
+                </article>
+
+                <article class="feature-card">
+                    <div class="feature-icon" aria-hidden="true">
+                        <svg class="icon" viewBox="0 0 24 24">
+                            <path d="M4 8h14"/>
+                            <path d="M14 4l4 4-4 4"/>
+                            <path d="M20 16H6"/>
+                            <path d="M10 12l-4 4 4 4"/>
+                        </svg>
+                    </div>
+                    <h3>Transaction Processing</h3>
+                    <p>Record deposits, withdrawals and transfers accurately, one step at a time.</p>
+                </article>
+
+            </div>
+        </div>
+    </section>
+
+</main>
+
+<footer class="site-footer" id="contact">
+    <div class="container footer-inner">
+        <div>
+            <p class="footer-name">Banking System</p>
+            <p class="footer-contact">Contact: <a href="mailto:support@bankingsystem.example">support@bankingsystem.example</a></p>
+        </div>
+        <p class="footer-copy">&copy; <span id="year">2026</span> Banking System. All rights reserved.</p>
+    </div>
+</footer>
+
+<script src="js/script.js"></script>
+</body>
+</html>
