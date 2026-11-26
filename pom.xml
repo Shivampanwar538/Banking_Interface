@@ -30,6 +30,7 @@
 		<java.version>17</java.version>
 		<maven.compiler.source>17</maven.compiler.source>
 		<maven.compiler.target>17</maven.compiler.target>
+		<tomcat.version>11.0.29</tomcat.version><!-- Spring Boot 4.2.0 ships Tomcat 11.0.27, which has known security issues. 11.0.29 fixes them. -->
 	</properties>
 	<dependencies>
 
@@ -43,6 +44,13 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
+			<exclusions>
+				<!-- IntelliJ flagged android-json as vulnerable, so I excluded it to address the warning as it is only used in tests. If a test fails because an org.json class is missing, add org.json:json as a test dependency. -->
+				<exclusion>
+					<groupId>com.vaadin.external.google</groupId>
+					<artifactId>android-json</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 
 		<dependency>
@@ -60,7 +68,7 @@
 			<artifactId>spring-boot-starter-jdbc</artifactId>
 		</dependency>
 
-		<!--monitoring and management features (health,metrics etc)-->
+		<!--monitoring and management features (health,metrics etc.)-->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-actuator</artifactId>
