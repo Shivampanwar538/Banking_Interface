@@ -33,7 +33,6 @@
 	</properties>
 	<dependencies>
 
-
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
@@ -50,8 +49,6 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
-
-
 
 		<dependency>
 			<groupId>com.mysql</groupId>
@@ -70,7 +67,7 @@
 		</dependency>
 
 
-		<!-- This provides additional development-time features such as automatic restarts and live reload during development.can uncomment and change two setting one is in build -> auto... and other is in advanced settings -> auto ....  -->
+<!-- This provides additional development-time features such as automatic restarts and live reload during development.can uncomment and change two setting one is in build -> auto... and other is in advanced settings -> auto ....  -->
 
 <!--		<dependency>-->
 <!--			<groupId>org.springframework.boot</groupId>-->
