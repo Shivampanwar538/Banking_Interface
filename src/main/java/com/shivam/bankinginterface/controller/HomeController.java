@@ -1,4 +1,4 @@
-package com.shivam.BankingInterface.Controller;
+package com.shivam.bankinginterface.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;

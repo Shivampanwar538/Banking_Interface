@@ -1,4 +1,4 @@
-package com.shivam.BankingInterface;
+package com.shivam.bankinginterface;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

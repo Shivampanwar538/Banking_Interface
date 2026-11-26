@@ -1,4 +1,4 @@
-package com.shivam.BankingInterface;
+package com.shivam.bankinginterface;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
