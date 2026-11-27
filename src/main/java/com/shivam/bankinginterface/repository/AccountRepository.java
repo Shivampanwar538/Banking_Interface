@@ -14,7 +14,7 @@ public class AccountRepository {
     public AccountRepository(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
-    public static final RowMapper<Account> MAPPER = (rs, rowNum) -> new Account(
+    private static final RowMapper<Account> mapper = (rs, rowNum) -> new Account(
             rs.getLong("account_id"),
             rs.getLong("customer_id"),
             rs.getLong("branch_id"),
@@ -22,8 +22,8 @@ public class AccountRepository {
             rs.getBigDecimal("balance"),
             rs.getString("status"));
     public Optional<Account> findByAccountNumber(String accountNumber){
-        String sql = "SELECT account_id, customer_id, branch_id, account_number, balance, status FROM account WHERE account_number = ?";
-        return jdbcTemplate.query(sql, MAPPER, accountNumber).stream().findFirst();
+        String sql = "select account_id, customer_id, branch_id, account_number, balance, status from account where account_number = ?";
+        return jdbcTemplate.query(sql, mapper, accountNumber).stream().findFirst();
     }
     public int addToBalance(long accountId , BigDecimal amount){
         String sql = "update account set balance = balance + ? where account_id = ?";
