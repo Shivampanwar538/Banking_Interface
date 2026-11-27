@@ -30,3 +30,17 @@ create table account(
     constraint fk_account_customer foreign key (customer_id) references customer(customer_id),
     constraint fk_account_branch foreign key (branch_id) references branch(branch_id)
 );
+create table bank_transaction(
+    id BigInt primary key auto_increment,
+    transaction_id varchar(50) unique not null,
+    type varchar(20) not null,
+    constraint chk_transaction_type check (type in ('DEPOSIT', 'WITHDRAWAL', 'TRANSFER')),
+    channel varchar(20) not null,
+    constraint chk_transaction_channel check (channel in ('ATM', 'INTERNET', 'BRANCH', 'MOBILE','UPI')),
+    source_account varchar(20) ,
+    destination_account varchar(20) ,
+    amount decimal(15,2) not null ,
+    status varchar(20) not null,
+    constraint chk_transaction_status check (status in ('SUCCESS', 'REJECTED', 'FAILED')),
+    created_at timestamp default current_timestamp NOT NULL
+);
