@@ -44,3 +44,14 @@ create table bank_transaction(
     constraint chk_transaction_status check (status in ('SUCCESS', 'REJECTED', 'FAILED')),
     created_at timestamp default current_timestamp NOT NULL
 );
+create table transaction_audit(
+    id bigint primary key auto_increment,
+    transaction_id varchar(50) not null,
+    outcome varchar(20) not null,
+    constraint chk_audit_outcome check (outcome in ('SUCCESS', 'REJECTED', 'FAILED','DUPLICATE')),
+    thread_name varchar(100) not null,
+    duration_ms bigint not null,
+    constraint chk_audit_duration check (duration_ms >= 0),
+    created_at timestamp default current_timestamp NOT NULL,
+    constraint fk_audit_transaction foreign key (transaction_id) references bank_transaction(transaction_id)
+);
