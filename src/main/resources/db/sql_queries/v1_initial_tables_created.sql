@@ -55,3 +55,12 @@ create table transaction_audit(
     created_at timestamp default current_timestamp NOT NULL,
     constraint fk_audit_transaction foreign key (transaction_id) references bank_transaction(transaction_id)
 );
+create table failed_transaction(
+    id bigint primary key auto_increment,
+    transaction_id varchar(50) unique not null,
+    error_category varchar(50) not null,
+    constraint chk_error_category check (error_category in ('VALIDATION', 'ACCOUNT_NOT_FOUND', 'ACCOUNT_NOT_ACTIVE', 'INSUFFICIENT_BALANCE', 'SYSTEM_ERROR')),
+    reason varchar(255) not null,
+    created_at timestamp default current_timestamp NOT NULL,
+    constraint fk_failed_transaction foreign key (transaction_id) references bank_transaction(transaction_id)
+);
