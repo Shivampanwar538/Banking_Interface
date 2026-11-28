@@ -61,4 +61,34 @@ class TransactionExecutorTest {
 
         assertEquals("Account is frozen", e.getMessage());
     }
+    @Test
+    void transferMovesMoneyBetweenAccounts() {
+        executor.execute(req("TXN-E6", "TRANSFER", "ACC1000001", "ACC1000002", "300"));
+
+        assertEquals(0, balanceOf("ACC1000001").compareTo(new BigDecimal("700.00")));
+        assertEquals(0, balanceOf("ACC1000002").compareTo(new BigDecimal("1800.00")));
+    }
+
+    @Test
+    void transferBeyondBalanceIsRejectedAndChangesNothing() {
+        assertThrows(InsufficientBalanceException.class,
+                () -> executor.execute(req("TXN-E7", "TRANSFER", "ACC1000001", "ACC1000002", "1000.01")));
+
+        assertEquals(0, balanceOf("ACC1000001").compareTo(new BigDecimal("1000.00")));
+        assertEquals(0, balanceOf("ACC1000002").compareTo(new BigDecimal("1500.00")));
+    }
+
+    @Test
+    void transferToFrozenAccountIsRejected() {
+        assertThrows(AccountNotActiveException.class,
+                () -> executor.execute(req("TXN-E8", "TRANSFER", "ACC1000001", "ACC3000002", "10")));
+
+        assertEquals(0, balanceOf("ACC1000001").compareTo(new BigDecimal("1000.00")));
+    }
+
+    @Test
+    void transferFromUnknownAccountIsRejected() {
+        assertThrows(AccountNotFoundException.class,
+                () -> executor.execute(req("TXN-E9", "TRANSFER", "NOPE", "ACC1000002", "10")));
+    }
 }

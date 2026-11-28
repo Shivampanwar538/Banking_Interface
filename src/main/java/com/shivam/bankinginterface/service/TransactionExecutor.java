@@ -25,23 +25,33 @@ public class TransactionExecutor {
         switch (r.type()) {
             case "DEPOSIT" -> deposit(r);
             case "WITHDRAWAL" -> withdraw(r);
-            default -> throw new IllegalStateException("Transfer is not built yet");
+            case "TRANSFER" -> transfer(r);
+            default -> throw new IllegalStateException("Unsupported transaction type");
         }
+
         transactions.insert(new BankTransaction(r.transactionId(), r.type(), r.channel(),
                 r.sourceAccount(), r.destinationAccount(), r.amount(), "SUCCESS"));
         long ms = (System.nanoTime() - start) / 1_000_000;
         audits.insert(new TransactionAudit(r.transactionId(), "SUCCESS", Thread.currentThread().getName(), ms));
     }
-    private Account lockActiveAccount(String accountNumber) {
-        long id = accounts.findByAccountNumber(accountNumber)
+
+    private long idOf(String accountNumber) {
+        return accounts.findByAccountNumber(accountNumber)
                 .orElseThrow(AccountNotFoundException::new)
                 .accountId();
-        Account locked = accounts.findByIdForUpdate(id)
+    }
+
+    private Account lockActive(long accountId) {
+        Account locked = accounts.findByIdForUpdate(accountId)
                 .orElseThrow(AccountNotFoundException::new);
         if (!locked.status().equals("ACTIVE")) {
             throw new AccountNotActiveException("Account is " + locked.status().toLowerCase());
         }
         return locked;
+    }
+
+    private Account lockActiveAccount(String accountNumber) {
+        return lockActive(idOf(accountNumber));
     }
 
     private void deposit(TransactionRequest r) {
@@ -55,6 +65,25 @@ public class TransactionExecutor {
             throw new InsufficientBalanceException();
         }
         accounts.addToBalance(account.accountId(), r.amount().negate());
+    }
+
+    private void transfer(TransactionRequest r) {
+        long sourceId = idOf(r.sourceAccount());
+        long destinationId = idOf(r.destinationAccount());
+
+        if (sourceId == destinationId) {
+            throw new InvalidTransactionException("Source and destination accounts must differ");
+        }
+
+        Account first = lockActive(Math.min(sourceId, destinationId));
+        Account second = lockActive(Math.max(sourceId, destinationId));
+        Account source = first.accountId() == sourceId ? first : second;
+
+        if (source.balance().compareTo(r.amount()) < 0) {
+            throw new InsufficientBalanceException();
+        }
+        accounts.addToBalance(source.accountId(), r.amount().negate());
+        accounts.addToBalance(destinationId, r.amount());
     }
 
 }
