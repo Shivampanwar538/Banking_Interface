@@ -4,7 +4,6 @@ import com.shivam.bankinginterface.model.Account;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.UncategorizedSQLException;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -52,5 +51,16 @@ public class AccountRepositoryTest {
                 () -> accountRepository.addToBalance(1L, new BigDecimal("-5000")));
 
         assertEquals(3819, e.getSQLException().getErrorCode());
+    }
+    @Test
+    void locksAndReturnsExistingAccount() {
+        Optional<Account> result = accountRepository.findByIdForUpdate(11L);
+        assertTrue(result.isPresent());
+        assertEquals("ACC1000011", result.get().accountNumber());
+    }
+
+    @Test
+    void lockOnUnknownIdReturnsEmpty() {
+        assertTrue(accountRepository.findByIdForUpdate(999L).isEmpty());
     }
 }

@@ -29,4 +29,8 @@ public class AccountRepository {
         String sql = "update account set balance = balance + ? where account_id = ?";
         return jdbcTemplate.update(sql, amount, accountId);
     }
+    public Optional<Account> findByIdForUpdate(long accountId) {
+        String sql = "SELECT account_id, customer_id, branch_id, account_number, balance, status FROM account WHERE account_id = ? FOR UPDATE";
+        return jdbcTemplate.query(sql, mapper, accountId).stream().findFirst();
+    }
 }
