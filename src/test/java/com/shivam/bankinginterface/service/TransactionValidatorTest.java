@@ -36,4 +36,5 @@ class TransactionValidatorTest {
     @Test void withdrawalNeedsSource() { assertRejected(request("WITHDRAWAL", null, null, "10"), "Missing source account"); }
     @Test void transferNeedsBothAccounts() { assertRejected(request("TRANSFER", "ACC1", null, "10"), "Missing source or destination account"); }
     @Test void transferToSameAccountRejected() { assertRejected(request("TRANSFER", "ACC1", "acc1", "10"), "Source and destination accounts must differ"); }
+    @Test void unknownChannelRejected() { assertRejected(new TransactionRequest("TXN1", null, "ACC1", new BigDecimal("10"), "DEPOSIT", "FAX"), "Invalid channel");}
 }
